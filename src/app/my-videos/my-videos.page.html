@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>My Videos</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-searchbar [(ngModel)]="query" (ionInput)="searchVideos($event)">
+        </ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button>
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="top">
+            <ion-fab-button (click)="selectVideo()">
+                <ion-icon name="images"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button (click)="enterVideo()">
+                <ion-icon name="link"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list>
+    </ion-fab>
+    <ion-list>
+        <ion-item *ngFor="let video of myVideos">
+            <ion-thumbnail slot="start">
+                <img [src]="video.thumbnail ? video.thumbnail.url: '/assets/video.png'">
+            </ion-thumbnail>
+            <ion-label>
+                <h3>{{ video.title }}</h3>
+                <p *ngIf="video.description">{{ video.description }}</p>
+            </ion-label>
+            <ion-button slot="end" fill="clear">
+                <ion-icon name="ellipsis-vertical"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </ion-list>
+</ion-content>
