@@ -1,5 +1,7 @@
 {
   "name": "MyVideosApp",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

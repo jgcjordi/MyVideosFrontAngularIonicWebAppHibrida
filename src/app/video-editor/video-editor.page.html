@@ -1,0 +1,55 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Video Properties</ion-title>
+        <ion-buttons slot="end">
+            <ion-button *ngIf="mode !== 'view'" (click)="save()">Save</ion-button>
+            <ion-button (click)="close()">
+                {{ mode === 'view'? 'Close': 'Cancel' }}
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding-horizontal">
+    <ion-list>
+        <ion-item>
+            <ion-label position="floating">Title</ion-label>
+            <ion-input type="text" [readonly]="mode === 'view'" [(ngModel)]="video.title"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Description</ion-label>
+            <ion-input type="text" [readonly]="mode === 'view'" [(ngModel)]="video.description"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Tags</ion-label>
+            <ion-input type="text" [readonly]="mode === 'view'" [(ngModel)]="video.tags"></ion-input>
+        </ion-item>
+    </ion-list>
+    <ion-card>
+        <ion-fab vertical="top" horizontal="end">
+            <ion-fab-button>
+                <ion-icon name="create"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-list side="bottom">
+                <ion-fab-button>
+                    <ion-icon name="images"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-button>
+                    <ion-icon name="link"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-button>
+                    <ion-icon name="camera"></ion-icon>
+                </ion-fab-button>
+            </ion-fab-list>
+        </ion-fab>
+        <img [src]="video.thumbnail? video.thumbnail.url: '/assets/video.png'">
+        <ion-card-content>
+            <ion-text>
+                <h2>URL: {{ video.url }}</h2>
+                <p *ngIf="video.author">Author: {{ video.author }}</p>
+                <p *ngIf="video.date">Date: {{ video.date }}</p>
+                <p *ngIf="video.duration">Duration: {{ video.duration }}</p>
+                <p *ngIf="video.width">Dimensions: {{ video.width }}x{{ video.height }}</p>
+            </ion-text>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

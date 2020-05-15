@@ -12,6 +12,10 @@ import { AppComponent } from './app.component';
 import { VideosService } from './services/videos.service';
 import { MemoryVideosService } from './services/memory-videos.service';
 
+import { Camera } from '@ionic-native/camera/ngx';
+
+import { VideoEditorPageModule } from './video-editor/video-editor.module';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -19,6 +23,8 @@ import { MemoryVideosService } from './services/memory-videos.service';
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
+    VideoEditorPageModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: VideosService, useClass: MemoryVideosService}
   ],
