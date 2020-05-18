@@ -3,6 +3,7 @@ import { Video } from '../models/video';
 import { YoutubeVideosService } from '../services/youtube-videos.service';
 import { AlertController, ModalController, ActionSheetController, } from '@ionic/angular';
 import { VideoEditorPage } from '../video-editor/video-editor.page';
+import { VideoPlayerPage } from '../video-player/video-player.page';
 import { OverlayEventDetail } from '@ionic/core';
 
 
@@ -51,7 +52,7 @@ export class YoutubeVideosPage implements OnInit {
           icon: 'play',
           handler: () => {
             console.log('Play video!!');
-            //this.playVideo(video);
+            this.playVideo(video);
           }
         },
         {
@@ -81,6 +82,14 @@ export class YoutubeVideosPage implements OnInit {
           });
         modal.present();
       });
+  }
+
+  playVideo(video: Video) {
+    console.log(`[MyVideosPage] playVideo(${video.id})`);
+    this.modalCtrl.create({
+      component: VideoPlayerPage,
+      componentProps: { video: video }
+    }).then((modal) => modal.present());
   }
 
 }

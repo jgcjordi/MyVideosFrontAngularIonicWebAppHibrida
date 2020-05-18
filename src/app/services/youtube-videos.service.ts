@@ -76,6 +76,7 @@ export class YoutubeVideosService extends VideosService {
     });
   }
   private clone(video: any): Video {
+    console.log(video)
     let id = video.id.videoId || video.id;
     let clone: Video = {
       id: id,

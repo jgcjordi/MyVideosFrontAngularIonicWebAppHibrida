@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class VideoPlayerPage implements OnInit {
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController, private domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
   }

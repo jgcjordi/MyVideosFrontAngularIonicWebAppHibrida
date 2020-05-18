@@ -7,6 +7,6 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <video [src]="video.url" autoplay controls style="width: 100%; height: 100%;">
-  </video>
+    <video *ngIf="video.type !== 'youtube'" [src]="video.url" autoplay controls style="width: 100%; height: 100%;"></video>
+    <iframe *ngIf="video.type === 'youtube'" style="width: 100%; height: 100%;" id="ytplayer" type="text/html" [src]="domSanitizer.bypassSecurityTrustResourceUrl(video.url)" frameborder="0" width="100%" height="100%"></iframe>
 </ion-content>
