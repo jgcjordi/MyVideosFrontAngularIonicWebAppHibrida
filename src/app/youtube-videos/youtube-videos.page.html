@@ -1,9 +1,29 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>YoutubeVideos</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Youtube Videos</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-searchbar [(ngModel)]="query" (keyup.enter)="searchVideos($event)">
+        </ion-searchbar>
+        <!-- <ion-button shape="round" slot="end" (click)="searchVideos()">
+            <ion-icon name="search-outline"></ion-icon>
+        </ion-button> -->
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <ion-list>
+        <ion-item *ngFor="let video of myVideos">
+            <ion-thumbnail slot="start" (click)="playVideo(video)">
+                <img [src]="video.thumbnail ? video.thumbnail.url: '/assets/video.png'">
+            </ion-thumbnail>
+            <ion-label>
+                <h3>{{ video.title }}</h3>
+                <p *ngIf="video.description">{{ video.description }}</p>
+            </ion-label>
+            <ion-button slot="end" fill="clear" (click)="showMenu(video)">
+                <ion-icon name="ellipsis-vertical"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </ion-list>
 </ion-content>

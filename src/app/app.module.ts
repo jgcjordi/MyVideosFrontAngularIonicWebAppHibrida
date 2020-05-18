@@ -15,16 +15,20 @@ import { MemoryVideosService } from './services/memory-videos.service';
 import { Camera } from '@ionic-native/camera/ngx';
 
 import { VideoEditorPageModule } from './video-editor/video-editor.module';
+import { VideoPlayerPageModule } from './video-player/video-player.module';
+
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,
     Camera,
     VideoEditorPageModule,
+    VideoPlayerPageModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: VideosService, useClass: MemoryVideosService}
   ],

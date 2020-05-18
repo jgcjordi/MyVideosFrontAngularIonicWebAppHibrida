@@ -44,7 +44,7 @@
         <img [src]="video.thumbnail? video.thumbnail.url: '/assets/video.png'">
         <ion-card-content>
             <ion-text>
-                <h2>URL: {{ video.url }}</h2>
+                <p>URL: {{ video.url }}</p>
                 <p *ngIf="video.author">Author: {{ video.author }}</p>
                 <p *ngIf="video.date">Date: {{ video.date }}</p>
                 <p *ngIf="video.duration">Duration: {{ video.duration }}</p>
