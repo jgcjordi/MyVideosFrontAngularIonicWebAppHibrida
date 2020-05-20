@@ -4,17 +4,16 @@ import { Video } from '../models/video';
 import { PlaylistsService } from './playlists.service';
 import { YoutubeVideosService } from './youtube-videos.service';
 import { MemoryVideosService } from './memory-videos.service';
+import { VideosService } from './videos.service';
 
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ImplPlaylistService extends PlaylistsService {
   private playlists: Playlist[] = [];
   private nextId = 0;
 
-  constructor(private videos: MemoryVideosService, private youtubeVideos: YoutubeVideosService) { super() }
+  constructor(private videos: VideosService, private youtubeVideos: YoutubeVideosService) { super() }
 
   findPlaylists(): Promise<Playlist[]> {
     console.log(`[ImplPlaylistService] findPlaylists()`);

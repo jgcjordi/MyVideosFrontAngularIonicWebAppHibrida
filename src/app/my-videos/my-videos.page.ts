@@ -1,10 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Video } from '../models/video';
 import { VideosService } from '../services/videos.service';
+import { PlaylistsService } from '../services/playlists.service';
 import { AlertController, ModalController, ActionSheetController, } from '@ionic/angular';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { VideoEditorPage } from '../video-editor/video-editor.page';
 import { VideoPlayerPage } from '../video-player/video-player.page';
+import { PlaylistSelectorPage } from '../playlist-selector/playlist-selector.page';
 import { OverlayEventDetail } from '@ionic/core';
 import { Capacitor } from '@capacitor/core';
 
@@ -18,11 +20,26 @@ export class MyVideosPage implements OnInit {
   private myVideos: Video[] = [];
 
   constructor(private modalCtrl: ModalController, private camera: Camera,
-    private videos: VideosService, private alertCtrl: AlertController, private actionSheetCtrl: ActionSheetController, private changes: ChangeDetectorRef) { }
+    private videos: VideosService, private alertCtrl: AlertController,
+    private actionSheetCtrl: ActionSheetController, private changes: ChangeDetectorRef,
+    private playlistService: PlaylistsService) { }
 
   ngOnInit() {
     console.log('ngOnInit MyVideosPage');
-    this.searchVideos();
+    this.readVideoInfo("/assets/video/video1.mp4").then((video) => {
+      video.title = "Keep spirit"
+      video.description = "We will have our reward"
+      this.videos.addVideo(video)
+
+      this.readVideoInfo("/assets/video/video2.mp4").then((video2) => {
+        video2.title = "Keep spirit"
+        video2.description = "Don't mess with the big dog"
+        this.videos.addVideo(video2)
+
+        this.searchVideos();
+      })
+    })
+
   }
 
   searchVideos(evt?) {
@@ -163,6 +180,14 @@ export class MyVideosPage implements OnInit {
     this.actionSheetCtrl.create({
       buttons: [
         {
+          text: 'Add to playlist',
+          icon: 'star',
+          handler: () => {
+            console.log('Add video to playlist!!');
+            this.addToPlaylist(video);
+          }
+        },
+        {
           text: 'Delete',
           icon: 'trash',
           handler: () => {
@@ -234,6 +259,23 @@ export class MyVideosPage implements OnInit {
         }
       ]
     }).then((alert) => alert.present());
+  }
+
+  addToPlaylist(video: Video) {
+    console.log(`[MyVideosPage] addToPlaylist(${video.id})`);
+    this.modalCtrl.create({
+      component: PlaylistSelectorPage,
+      componentProps: { video: video }
+    }).then((modal) => {
+      modal.onDidDismiss()
+        .then((evt: OverlayEventDetail) => {
+          if (evt && evt.data) {
+            this.playlistService.addVideo(evt.data, video)
+            console.log(evt.data)
+          }
+        });
+      modal.present();
+    });
   }
 
 }

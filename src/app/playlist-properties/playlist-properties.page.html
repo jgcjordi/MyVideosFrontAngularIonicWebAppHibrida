@@ -1,0 +1,47 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Playlist Properties</ion-title>
+        <ion-buttons slot="end">
+            <ion-button *ngIf="mode !== 'view'" (click)="save()">Save</ion-button>
+            <ion-button (click)="close()">
+                {{ mode === 'view'? 'Close': 'Cancel' }}
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding-horizontal">
+    <ion-list>
+        <ion-item>
+            <ion-label position="floating">Title</ion-label>
+            <ion-input type="text" [readonly]="mode === 'view'" [(ngModel)]="playlist.title"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Description</ion-label>
+            <ion-input type="text" [readonly]="mode === 'view'" [(ngModel)]="playlist.description"></ion-input>
+        </ion-item>
+    </ion-list>
+    <ion-card>
+        <ion-fab vertical="top" horizontal="end">
+            <ion-fab-button>
+                <ion-icon name="create"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-list side="bottom">
+                <ion-fab-button>
+                    <ion-icon name="images"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-button>
+                    <ion-icon name="link"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-button>
+                    <ion-icon name="camera"></ion-icon>
+                </ion-fab-button>
+            </ion-fab-list>
+        </ion-fab>
+        <img class="center" [src]="playlist.thumbnail ? playlist.thumbnail.url: '/assets/playlist.png'" width="50%">
+        <ion-card-content>
+            <ion-text>
+                <p *ngIf="playlist.date">Date: {{ playlist.date }}</p>
+            </ion-text>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

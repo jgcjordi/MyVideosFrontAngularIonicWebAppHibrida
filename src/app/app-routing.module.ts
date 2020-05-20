@@ -24,6 +24,14 @@ const routes: Routes = [
   {
     path: 'video-player',
     loadChildren: () => import('./video-player/video-player.module').then( m => m.VideoPlayerPageModule)
+  },
+  {
+    path: 'playlist-properties',
+    loadChildren: () => import('./playlist-properties/playlist-properties.module').then( m => m.PlaylistPropertiesPageModule)
+  },
+  {
+    path: 'playlist-selector',
+    loadChildren: () => import('./playlist-selector/playlist-selector.module').then( m => m.PlaylistSelectorPageModule)
   }
 
 ];

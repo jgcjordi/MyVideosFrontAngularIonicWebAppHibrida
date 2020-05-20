@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Video } from '../models/video';
 import { YoutubeVideosService } from '../services/youtube-videos.service';
-import { AlertController, ModalController, ActionSheetController, } from '@ionic/angular';
+import { ModalController, ActionSheetController, } from '@ionic/angular';
 import { VideoEditorPage } from '../video-editor/video-editor.page';
 import { VideoPlayerPage } from '../video-player/video-player.page';
 import { OverlayEventDetail } from '@ionic/core';
@@ -44,7 +44,6 @@ export class YoutubeVideosPage implements OnInit {
           icon: 'star',
           handler: () => {
             console.log('Add to playlist!!');
-            //this.deleteVideo(video);
           }
         },
         {

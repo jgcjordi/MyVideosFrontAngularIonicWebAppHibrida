@@ -8,6 +8,49 @@ export class MemoryVideosService extends VideosService {
 
   constructor() { super(); }
 
+  readVideoInfo(video: Video, secs?: number): Promise<Video> {
+    return new Promise((resolve, reject) => {
+      let url = video.url
+      let videoNode: HTMLVideoElement = document.createElement('video');
+      videoNode.onloadedmetadata = () => {
+        // - get basic info
+        video.width = videoNode.videoWidth;
+        video.height = videoNode.videoHeight;
+        video.duration = String(videoNode.duration) + ' secs';
+        // - move to frame
+        videoNode.currentTime = secs ? Math.min(secs, videoNode.duration) : 0;
+      };
+      videoNode.onseeked = (ev) => {
+        // - capture thumbnail
+        try {
+          let canvas = document.createElement('canvas');
+          canvas.height = videoNode.videoHeight;
+          canvas.width = videoNode.videoWidth;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(videoNode, 0, 0, canvas.width, canvas.height);
+          video.thumbnail = {
+            url: canvas.toDataURL(),
+            height: canvas.height,
+            width: canvas.width
+          };
+        } catch (err) {
+          console.log('videoNode.onseeked_error=' + JSON.stringify(err));
+        } finally {
+          resolve(video);
+        }
+      };
+      videoNode.onerror = (ev) => {
+        let error = {
+          code: videoNode.error.code, message:
+            videoNode.error.message
+        };
+        reject(error);
+      };
+      videoNode.src = url;
+    });
+  }
+
+
   findVideos(query: string): Promise<Video[]> {
     console.log(`[MemoryVideosService] findVideos(${query})`);
     return new Promise((resolve, reject) => {

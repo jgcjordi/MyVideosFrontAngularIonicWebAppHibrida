@@ -7,7 +7,7 @@ export interface Playlist {
         width: number;
         height: number;
     }
-    date?: number;
+    date?: string;
     count?: number; // número de vídeos en la lista de reproducción
     videosIds?: string[];
 }

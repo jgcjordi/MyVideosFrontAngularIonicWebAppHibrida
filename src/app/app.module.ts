@@ -11,11 +11,16 @@ import { AppComponent } from './app.component';
 
 import { VideosService } from './services/videos.service';
 import { MemoryVideosService } from './services/memory-videos.service';
+import { PlaylistsService } from './services/playlists.service';
+import { ImplPlaylistService } from './services/impl-playlist.service';
 
 import { Camera } from '@ionic-native/camera/ngx';
 
 import { VideoEditorPageModule } from './video-editor/video-editor.module';
 import { VideoPlayerPageModule } from './video-player/video-player.module';
+import { PlaylistPropertiesPageModule } from './playlist-properties/playlist-properties.module';
+import { PlaylistSelectorPageModule } from './playlist-selector/playlist-selector.module';
+
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -29,8 +34,11 @@ import { HttpClientModule } from '@angular/common/http';
     Camera,
     VideoEditorPageModule,
     VideoPlayerPageModule,
+    PlaylistPropertiesPageModule,
+    PlaylistSelectorPageModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: VideosService, useClass: MemoryVideosService}
+    { provide: VideosService, useClass: MemoryVideosService},
+    { provide: PlaylistsService, useClass: ImplPlaylistService}
   ],
   bootstrap: [AppComponent]
 })
