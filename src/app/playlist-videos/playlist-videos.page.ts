@@ -17,6 +17,7 @@ import { VideoEditorPage } from '../video-editor/video-editor.page';
 
 export class PlaylistVideosPage implements OnInit {
 
+  private playlistVideosRequesting: Video[] = [];
   private playlistVideos: Video[] = [];
 
   @Input()
@@ -30,31 +31,51 @@ export class PlaylistVideosPage implements OnInit {
     this.searchVideos()
   }
 
-  searchVideos(){
-    this.playlistVideos = []
-    this.playlist.videosIds.forEach((videoid) => {
-      console.log(parseInt(videoid, 10))
-      if (Number(videoid)) {
-        this.videosService.findVideoById(videoid).then(
-          (localVideo) => {
-            if (localVideo) {
-              this.playlistVideos.push(localVideo)
-            } else {
-              let video:Video = {
-                id: videoid,
-                type: "local",
-                url: "Deleted", 
-                title: "Deleted Video",
-                description: "This video was removed form the app"
-              }
-              this.playlistVideos.push(video)
+  searchVideos() {
+    this.playlistVideosRequesting = []
+    let requests = this.playlist.videosIds.map((videoid) => {
+      return new Promise((resolve) => {
+        this.searchVideo(videoid, resolve);
+      });
+    })
+    Promise.all(requests).then(()=>{
+      console.log("all requests done")
+      let _playlistVideos:Video[] = []
+      this.playlist.videosIds.forEach((videoid) => {
+        let index = this.playlistVideosRequesting.findIndex((video) => video.id === videoid);
+        _playlistVideos.push(this.playlistVideosRequesting[index])
+      })
+      this.playlistVideos = _playlistVideos
+      this.playlistVideosRequesting = []
+    })
+  }
+
+  searchVideo(videoid: string, resolve) {
+    if (Number(videoid)) {
+      this.videosService.findVideoById(videoid).then(
+        (localVideo) => {
+          if (localVideo) {
+            this.playlistVideosRequesting.push(localVideo)
+            resolve()
+          } else {
+            let video: Video = {
+              id: videoid,
+              type: "local",
+              url: "Deleted",
+              title: "Deleted Video",
+              description: "This video was removed form the app"
             }
-          })
-      } else {
-        this.youtubeVideosService.findVideoById(videoid).then(
-          video => this.playlistVideos.push(video))
-      }
-    });
+            this.playlistVideosRequesting.push(video)
+            resolve()
+          }
+        })
+    } else {
+      this.youtubeVideosService.findVideoById(videoid).then(
+        (video) => {
+          this.playlistVideosRequesting.push(video)
+          resolve()
+        })
+    }
   }
 
   close() {
@@ -113,8 +134,29 @@ export class PlaylistVideosPage implements OnInit {
 
   removeVideo(video: Video) {
     console.log(`[PlaylistVideosPage] removeVideo(${video.id})`);
-    this.playlistService.removeVideo(this.playlist.id, video.id)
-    this.searchVideos()
+    this.playlistService.removeVideo(this.playlist.id, video.id).then(() => this.searchVideos())
+  }
+
+  moveUp(video: Video) {
+    console.log(`[PlaylistVideosPage] moveUp(${video.id})`)
+    var index = this.playlist.videosIds.findIndex((videoid) => videoid === video.id);
+    if (index !== 0) {
+      this.playlist.videosIds.splice(index, 1)
+      this.playlist.videosIds.splice(index - 1, 0, video.id)
+      this.playlistService.updatePlaylist(this.playlist).then(() => this.searchVideos())
+    }
+
+  }
+
+  moveDown(video: Video) {
+    console.log("Down")
+    console.log(`[PlaylistVideosPage] moveDown(${video.id})`)
+    var index = this.playlist.videosIds.findIndex((videoid) => videoid === video.id);
+    if (index !== this.playlist.videosIds.length-1) {
+      this.playlist.videosIds.splice(index, 1)
+      this.playlist.videosIds.splice(index + 1, 0, video.id)
+      this.playlistService.updatePlaylist(this.playlist).then(() => this.searchVideos())
+    }
   }
 
 }

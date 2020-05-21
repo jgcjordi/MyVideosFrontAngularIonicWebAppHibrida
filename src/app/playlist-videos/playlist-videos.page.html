@@ -9,17 +9,21 @@
 
 <ion-content>
     <ion-list>
-        <ion-item *ngFor="let video of playlistVideos">
-            <ion-thumbnail slot="start" (click)="playVideo(video)">
-                <img [src]="video.thumbnail ? video.thumbnail.url: '/assets/video.png'">
-            </ion-thumbnail>
-            <ion-label>
-                <h3>{{ video.title }}</h3>
-                <p *ngIf="video.description">{{ video.description }}</p>
-            </ion-label>
-            <ion-button slot="end" fill="clear" (click)="showMenu(video)">
-                <ion-icon name="ellipsis-vertical"></ion-icon>
-            </ion-button>
-        </ion-item>
+        <ion-item-sliding *ngFor="let video of playlistVideos">
+            <ion-item>
+                <ion-thumbnail slot="start" (click)="playVideo(video)">
+                    <img [src]="video.thumbnail ? video.thumbnail.url: '/assets/video.png'">
+                </ion-thumbnail>
+                <ion-label>
+                    <h3>{{ video.title }}</h3>
+                    <p *ngIf="video.description">{{ video.description }}</p>
+                </ion-label>
+                <ion-button slot="end" fill="clear" (click)="showMenu(video)">
+                    <ion-icon name="ellipsis-vertical"></ion-icon>
+                </ion-button>
+            </ion-item>
+            <ion-item-options side="start" (ionSwipe)="moveDown(video)"></ion-item-options>
+            <ion-item-options side="end" (ionSwipe)="moveUp(video)"></ion-item-options>
+        </ion-item-sliding>
     </ion-list>
 </ion-content>
