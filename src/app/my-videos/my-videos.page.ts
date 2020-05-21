@@ -32,7 +32,7 @@ export class MyVideosPage implements OnInit {
       this.videos.addVideo(video)
 
       this.readVideoInfo("/assets/video/video2.mp4").then((video2) => {
-        video2.title = "Keep spirit"
+        video2.title = "Road toubles"
         video2.description = "Don't mess with the big dog"
         this.videos.addVideo(video2)
 

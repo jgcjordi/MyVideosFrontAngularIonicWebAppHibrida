@@ -4,6 +4,7 @@ import { PlaylistPropertiesPage } from '../playlist-properties/playlist-properti
 import { Playlist } from '../models/playlist';
 import { OverlayEventDetail } from '@ionic/core';
 import { PlaylistsService } from '../services/playlists.service';
+import { PlaylistVideosPage } from '../playlist-videos/playlist-videos.page';
 
 @Component({
   selector: 'app-playlists',
@@ -20,7 +21,21 @@ export class PlaylistsPage implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit MyVideosPage');
-    this.searchPlaylists();
+    let playlist0: Playlist = {
+      id: "",
+      title: "Empty Example",
+      description: "Fill this playlist with your videos",
+      thumbnail: {
+        url: "/assets/playlist.png",
+        width: 0,
+        height: 0
+      },
+      date: new Date().toDateString(),
+      count: 0,
+      videosIds: []
+    };
+    this.playlistService.addPlaylist(playlist0)
+      .then(() => this.searchPlaylists());
   }
 
   searchPlaylists() {
@@ -72,7 +87,7 @@ export class PlaylistsPage implements OnInit {
           icon: 'folder',
           handler: () => {
             console.log('Open playlist!!');
-            //this.deleteVideo(video);
+            this.openPlaylist(playlist);
           }
         },
         {
@@ -125,7 +140,7 @@ export class PlaylistsPage implements OnInit {
   }
 
   editPlaylist(playlist: Playlist) {
-    console.log(`[MyVideosPage] editVideo(${playlist.id})`);
+    console.log(`[PlaylistsPage] editPlaylist(${playlist.id})`);
     this.modalCtrl.create({
       component: PlaylistPropertiesPage,
       componentProps: { mode: 'edit', playlist: playlist }
@@ -138,6 +153,17 @@ export class PlaylistsPage implements OnInit {
                 .then(() => this.searchPlaylists());
             }
           });
+        modal.present();
+      });
+  }
+
+  openPlaylist(playlist: Playlist) {
+    console.log(`[PlaylistsPage] openPlaylist(${playlist.id})`);
+    this.modalCtrl.create({
+      component: PlaylistVideosPage,
+      componentProps: { playlist: playlist }
+    })
+      .then((modal) => {
         modal.present();
       });
   }

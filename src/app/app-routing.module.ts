@@ -32,6 +32,14 @@ const routes: Routes = [
   {
     path: 'playlist-selector',
     loadChildren: () => import('./playlist-selector/playlist-selector.module').then( m => m.PlaylistSelectorPageModule)
+  },
+  {
+    path: 'playlist-videos',
+    loadChildren: () => import('./playlist-videos/playlist-videos.module').then( m => m.PlaylistVideosPageModule)
+  },
+  {
+    path: 'playlist-player',
+    loadChildren: () => import('./playlist-player/playlist-player.module').then( m => m.PlaylistPlayerPageModule)
   }
 
 ];

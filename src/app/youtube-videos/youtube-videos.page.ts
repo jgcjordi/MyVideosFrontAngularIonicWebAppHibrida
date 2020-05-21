@@ -5,6 +5,9 @@ import { ModalController, ActionSheetController, } from '@ionic/angular';
 import { VideoEditorPage } from '../video-editor/video-editor.page';
 import { VideoPlayerPage } from '../video-player/video-player.page';
 import { OverlayEventDetail } from '@ionic/core';
+import { PlaylistsService } from '../services/playlists.service';
+import { PlaylistSelectorPage } from '../playlist-selector/playlist-selector.page';
+
 
 
 
@@ -17,8 +20,9 @@ export class YoutubeVideosPage implements OnInit {
   private query = '';
   private myVideos: Video[] = [];
 
-  constructor(private videos: YoutubeVideosService, private changes: ChangeDetectorRef, 
-    private actionSheetCtrl: ActionSheetController, private modalCtrl: ModalController) { }
+  constructor(private videos: YoutubeVideosService, private changes: ChangeDetectorRef,
+    private actionSheetCtrl: ActionSheetController, private modalCtrl: ModalController,
+    private playlistService: PlaylistsService) { }
 
   ngOnInit() {
     console.log('ngOnInit [YoutubeVideosPage]');
@@ -31,7 +35,7 @@ export class YoutubeVideosPage implements OnInit {
     this.videos.findVideos(query)
       .then((videos) => {
         this.myVideos = videos;
-        console.log('[MyVideosPage] searchVideos() => ' + JSON.stringify(this.myVideos));
+        console.log('[YoutubeVideosPage] searchVideos() => ' + JSON.stringify(this.myVideos));
         this.changes.detectChanges();
       });
   }
@@ -44,6 +48,7 @@ export class YoutubeVideosPage implements OnInit {
           icon: 'star',
           handler: () => {
             console.log('Add to playlist!!');
+            this.addToPlaylist(video)
           }
         },
         {
@@ -66,7 +71,7 @@ export class YoutubeVideosPage implements OnInit {
   }
 
   detailsVideo(video: Video) {
-    console.log(`[MyVideosPage] detailsVideo(${video.id})`);
+    console.log(`[YoutubeVideosPage] detailsVideo(${video.id})`);
     this.modalCtrl.create({
       component: VideoEditorPage,
       componentProps: { mode: 'view', video: video }
@@ -84,11 +89,28 @@ export class YoutubeVideosPage implements OnInit {
   }
 
   playVideo(video: Video) {
-    console.log(`[MyVideosPage] playVideo(${video.id})`);
+    console.log(`[YoutubeVideosPage] playVideo(${video.id})`);
     this.modalCtrl.create({
       component: VideoPlayerPage,
       componentProps: { video: video }
     }).then((modal) => modal.present());
+  }
+
+  addToPlaylist(video: Video) {
+    console.log(`[YoutubeVideosPage] addToPlaylist(${video.id})`);
+    this.modalCtrl.create({
+      component: PlaylistSelectorPage,
+      componentProps: { video: video }
+    }).then((modal) => {
+      modal.onDidDismiss()
+        .then((evt: OverlayEventDetail) => {
+          if (evt && evt.data) {
+            this.playlistService.addVideo(evt.data, video)
+            console.log(evt.data)
+          }
+        });
+      modal.present();
+    });
   }
 
 }

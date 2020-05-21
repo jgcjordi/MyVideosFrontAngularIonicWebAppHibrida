@@ -4,7 +4,7 @@ import { VideosService } from './videos.service';
 @Injectable()
 export class MemoryVideosService extends VideosService {
   private videos: Video[] = [];
-  private nextId = 0;
+  private nextId = 1;
 
   constructor() { super(); }
 

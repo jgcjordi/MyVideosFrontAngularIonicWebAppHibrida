@@ -5,8 +5,6 @@ import { Playlist } from '../models/playlist';
 import { ModalController } from '@ionic/angular';
 
 
-
-
 @Component({
   selector: 'app-playlist-selector',
   templateUrl: './playlist-selector.page.html',

@@ -89,6 +89,7 @@ export class ImplPlaylistService extends PlaylistsService {
     var index = _playlist.videosIds.findIndex((id) => id === videoId);
     if (index !== -1) {
       _playlist.videosIds.splice(index, 1);
+      _playlist.count--;
       this.updatePlaylist(_playlist)
       return new Promise((resolve, reject) => resolve());
     } else {

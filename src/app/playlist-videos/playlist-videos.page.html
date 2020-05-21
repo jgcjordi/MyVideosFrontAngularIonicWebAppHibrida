@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Playlist {{playlist.title}}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="close()">Close</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let video of playlistVideos">
+            <ion-thumbnail slot="start" (click)="playVideo(video)">
+                <img [src]="video.thumbnail ? video.thumbnail.url: '/assets/video.png'">
+            </ion-thumbnail>
+            <ion-label>
+                <h3>{{ video.title }}</h3>
+                <p *ngIf="video.description">{{ video.description }}</p>
+            </ion-label>
+            <ion-button slot="end" fill="clear" (click)="showMenu(video)">
+                <ion-icon name="ellipsis-vertical"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </ion-list>
+</ion-content>

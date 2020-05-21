@@ -25,7 +25,7 @@
         </ion-item>
     </ion-list>
     <ion-card>
-        <ion-fab vertical="top" horizontal="end">
+        <ion-fab *ngIf="mode !== 'view'" vertical="top" horizontal="end">
             <ion-fab-button>
                 <ion-icon name="create"></ion-icon>
             </ion-fab-button>

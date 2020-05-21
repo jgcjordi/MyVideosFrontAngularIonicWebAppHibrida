@@ -20,6 +20,8 @@ import { VideoEditorPageModule } from './video-editor/video-editor.module';
 import { VideoPlayerPageModule } from './video-player/video-player.module';
 import { PlaylistPropertiesPageModule } from './playlist-properties/playlist-properties.module';
 import { PlaylistSelectorPageModule } from './playlist-selector/playlist-selector.module';
+import { PlaylistVideosPageModule } from './playlist-videos/playlist-videos.module';
+
 
 
 import { HttpClientModule } from '@angular/common/http';
@@ -36,6 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
     VideoPlayerPageModule,
     PlaylistPropertiesPageModule,
     PlaylistSelectorPageModule,
+    PlaylistVideosPageModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: VideosService, useClass: MemoryVideosService},
     { provide: PlaylistsService, useClass: ImplPlaylistService}
