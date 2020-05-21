@@ -47,6 +47,7 @@ export class PlaylistVideosPage implements OnInit {
       })
       this.playlistVideos = _playlistVideos
       this.playlistVideosRequesting = []
+      this.changes.detectChanges();
     })
   }
 
