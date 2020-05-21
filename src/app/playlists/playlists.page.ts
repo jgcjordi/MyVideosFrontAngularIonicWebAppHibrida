@@ -22,21 +22,7 @@ export class PlaylistsPage implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit MyVideosPage');
-    let playlist0: Playlist = {
-      id: "",
-      title: "Empty Example",
-      description: "Fill this playlist with your videos",
-      thumbnail: {
-        url: "/assets/playlist.png",
-        width: 0,
-        height: 0
-      },
-      date: new Date().toDateString(),
-      count: 0,
-      videosIds: []
-    };
-    this.playlistService.addPlaylist(playlist0)
-      .then(() => this.searchPlaylists());
+    this.searchPlaylists()
   }
 
   searchPlaylists() {

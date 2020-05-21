@@ -1,16 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Video } from '../models/video';
 import { VideosService } from './videos.service';
+
 @Injectable()
 export class MemoryVideosService extends VideosService {
   private videos: Video[] = [];
   private nextId = 1;
 
-  constructor() { super(); }
+  constructor() {
+    super();
+    //this.chargeExampleVideos();
+  }
 
-  readVideoInfo(video: Video, secs?: number): Promise<Video> {
+  chargeExampleVideos() {
+    this.readVideoInfo("/assets/video/video1.mp4").then((video) => {
+      video.title = "Keep spirit"
+      video.description = "We will have our reward"
+      this.addVideo(video)
+
+      this.readVideoInfo("/assets/video/video2.mp4").then((video2) => {
+        video2.title = "Road toubles"
+        video2.description = "Don't mess with the big dog"
+        this.addVideo(video2)
+      })
+    })
+  }
+
+  readVideoInfo(url: string, secs?: number): Promise<Video> {
+    console.log(`readVideoInfo(${url},${secs})`);
     return new Promise((resolve, reject) => {
-      let url = video.url
+      let video: Video = {
+        type: 'local',
+        url: url,
+        title: '',
+        description: '',
+        date: new Date().toDateString()
+      };
       let videoNode: HTMLVideoElement = document.createElement('video');
       videoNode.onloadedmetadata = () => {
         // - get basic info
@@ -49,7 +74,6 @@ export class MemoryVideosService extends VideosService {
       videoNode.src = url;
     });
   }
-
 
   findVideos(query: string): Promise<Video[]> {
     console.log(`[MemoryVideosService] findVideos(${query})`);

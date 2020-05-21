@@ -13,7 +13,27 @@ export class ImplPlaylistService extends PlaylistsService {
   private playlists: Playlist[] = [];
   private nextId = 0;
 
-  constructor(private videos: VideosService, private youtubeVideos: YoutubeVideosService) { super() }
+  constructor(private videos: VideosService, private youtubeVideos: YoutubeVideosService) {
+    super()
+    this.chargeExamplePlaylist()
+  }
+
+  chargeExamplePlaylist() {
+    let playlist0: Playlist = {
+      id: "",
+      title: "Empty Example",
+      description: "Fill this playlist with your videos",
+      thumbnail: {
+        url: "/assets/playlist.png",
+        width: 0,
+        height: 0
+      },
+      date: new Date().toDateString(),
+      count: 0,
+      videosIds: []
+    };
+    this.addPlaylist(playlist0);
+  }
 
   findPlaylists(): Promise<Playlist[]> {
     console.log(`[ImplPlaylistService] findPlaylists()`);
@@ -102,10 +122,10 @@ export class ImplPlaylistService extends PlaylistsService {
     return new Promise((resolve, reject) => {
       let videos = [];
       let _playlist = this.findPlaylistById(playlistId)
-      _playlist.videosIds.forEach((videoId) =>{
-        if(this.videos.findVideoById(videoId)){
+      _playlist.videosIds.forEach((videoId) => {
+        if (this.videos.findVideoById(videoId)) {
           videos.push(this.videos.findVideoById(videoId))
-        }else{
+        } else {
           videos.push(this.youtubeVideos.findVideoById(videoId))
         }
       })
