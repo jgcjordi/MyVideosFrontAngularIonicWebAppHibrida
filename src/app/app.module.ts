@@ -21,6 +21,7 @@ import { VideoPlayerPageModule } from './video-player/video-player.module';
 import { PlaylistPropertiesPageModule } from './playlist-properties/playlist-properties.module';
 import { PlaylistSelectorPageModule } from './playlist-selector/playlist-selector.module';
 import { PlaylistVideosPageModule } from './playlist-videos/playlist-videos.module';
+import { PlaylistPlayerPageModule } from './playlist-player/playlist-player.module'
 
 
 
@@ -39,10 +40,11 @@ import { HttpClientModule } from '@angular/common/http';
     PlaylistPropertiesPageModule,
     PlaylistSelectorPageModule,
     PlaylistVideosPageModule,
+    PlaylistPlayerPageModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: VideosService, useClass: MemoryVideosService},
-    { provide: PlaylistsService, useClass: ImplPlaylistService}
+    { provide: VideosService, useClass: MemoryVideosService },
+    { provide: PlaylistsService, useClass: ImplPlaylistService }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -34,7 +34,7 @@
                 <ion-icon name="videocam" padding-left></ion-icon>
                 <ion-label class="padding-left">{{playlist.count}} VIDEOS</ion-label>
             </ion-button>
-            <ion-button fill="clear">
+            <ion-button fill="clear" (click)="playPlaylist(playlist)">
                 <ion-icon name="play"></ion-icon>
                 <ion-label>PLAY</ion-label>
             </ion-button>

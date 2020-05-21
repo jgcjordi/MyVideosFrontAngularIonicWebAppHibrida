@@ -5,6 +5,7 @@ import { Playlist } from '../models/playlist';
 import { OverlayEventDetail } from '@ionic/core';
 import { PlaylistsService } from '../services/playlists.service';
 import { PlaylistVideosPage } from '../playlist-videos/playlist-videos.page';
+import { PlaylistPlayerPage } from '../playlist-player/playlist-player.page';
 
 @Component({
   selector: 'app-playlists',
@@ -95,7 +96,7 @@ export class PlaylistsPage implements OnInit {
           icon: 'play',
           handler: () => {
             console.log('Play playlist!!');
-            //this.playVideo(video);
+            this.playPlaylist(playlist)
           }
         },
         {
@@ -166,6 +167,14 @@ export class PlaylistsPage implements OnInit {
       .then((modal) => {
         modal.present();
       });
+  }
+
+  playPlaylist(playlist: Playlist) {
+    console.log(`[PlaylistsPage] playPlaylist(${playlist.id})`);
+    this.modalCtrl.create({
+      component: PlaylistPlayerPage,
+      componentProps: { playlist: playlist }
+    }).then((modal) => modal.present());
   }
 
 
