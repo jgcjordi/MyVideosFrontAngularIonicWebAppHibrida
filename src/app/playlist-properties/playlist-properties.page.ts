@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Playlist } from '../models/playlist';
 import { ModalController } from '@ionic/angular';
+import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+import { DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-playlist-properties',
@@ -14,7 +16,7 @@ export class PlaylistPropertiesPage implements OnInit {
   @Input()
   private mode = 'view';
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.playlist = this.clone(this.playlist);
@@ -28,6 +30,28 @@ export class PlaylistPropertiesPage implements OnInit {
   save() {
     console.log('[PlaylistPropertiesPage] save()');
     this.modalCtrl.dismiss(this.playlist);
+  }
+
+  async changeImageTakeCamera() {
+    const image = await Plugins.Camera.getPhoto({
+      quality: 100,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
+    });
+
+    this.playlist.thumbnail.url = image.dataUrl
+  }
+
+  async changeImageTakeDevice() {
+    const image = await Plugins.Camera.getPhoto({
+      quality: 100,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Photos
+    });
+
+    this.playlist.thumbnail.url = image.dataUrl
   }
 
   private clone(playlist: Playlist): Playlist {

@@ -26,13 +26,13 @@
                 <ion-icon name="create"></ion-icon>
             </ion-fab-button>
             <ion-fab-list side="bottom">
-                <ion-fab-button>
+                <ion-fab-button (click)="changeImageTakeDevice()">
                     <ion-icon name="images"></ion-icon>
                 </ion-fab-button>
-                <ion-fab-button>
+                <!-- <ion-fab-button>
                     <ion-icon name="link"></ion-icon>
-                </ion-fab-button>
-                <ion-fab-button>
+                </ion-fab-button> -->
+                <ion-fab-button (click)="changeImageTakeCamera()">
                     <ion-icon name="camera"></ion-icon>
                 </ion-fab-button>
             </ion-fab-list>
