@@ -1,0 +1,16 @@
+<ion-content class="ion-padding-horizontal">
+    <ion-list>
+        <ion-item>
+            <ion-label position="floating">Username</ion-label>
+            <ion-input type="text" [(ngModel)]="user"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+    </ion-list>
+    <div style="padding-top: 20px;">
+        <ion-button color="primary" expand="block" (click)="doLogin()">Login</ion-button>
+        <ion-button color="primary" expand="block" (click)="signup()">Sign up</ion-button>
+    </div>
+</ion-content>
