@@ -3,6 +3,8 @@ import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
 import { UserPage } from '../user/user.page';
+import { User } from '../models/user';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -12,7 +14,10 @@ export class LoginPage implements OnInit {
   user: string;
   password: string;
   constructor(private login: LoginService, private router: Router, private alertCtrl: AlertController, private modalCtrl: ModalController) { }
-  ngOnInit() { }
+  ngOnInit() {
+    const user: User = { name: 'Jordi', surname: 'Gomis', email: 'jordi', password:'gomis' };
+    this.login.addUser(user);
+   }
   doLogin() {
     console.log('[LoginPage] doLogin()');
     this.login.login(this.user, this.password)
