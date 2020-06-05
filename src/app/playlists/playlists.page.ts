@@ -25,6 +25,11 @@ export class PlaylistsPage implements OnInit {
     this.searchPlaylists()
   }
 
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter MyVideosPage');
+    this.searchPlaylists()
+}
+
   searchPlaylists() {
     console.log('[PlaylistsPage] searchPlaylists()');
     this.playlistService.findPlaylists()

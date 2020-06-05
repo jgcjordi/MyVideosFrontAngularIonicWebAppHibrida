@@ -132,25 +132,25 @@ export class PlaylistVideosPage implements OnInit {
   }
 
   moveUp(video: Video) {
-    console.log(`[PlaylistVideosPage] moveUp(${video.id})`)
-    var index = this.playlist.videosIds.findIndex((videoid) => videoid === video.id);
-    if (index !== 0) {
-      this.playlist.videosIds.splice(index, 1)
-      this.playlist.videosIds.splice(index - 1, 0, video.id)
-      this.playlistService.updatePlaylist(this.playlist).then(() => this.searchVideos())
-    }
-
+    console.log("Up")
+    // console.log(`[PlaylistVideosPage] moveUp(${video.id})`)
+    // var index = this.playlist.videosIds.findIndex((videoid) => videoid === video.id);
+    // if (index !== 0) {
+    //   this.playlist.videosIds.splice(index, 1)
+    //   this.playlist.videosIds.splice(index - 1, 0, video.id)
+    //   this.playlistService.updatePlaylist(this.playlist).then(() => this.searchVideos())
+    // }
   }
 
   moveDown(video: Video) {
     console.log("Down")
-    console.log(`[PlaylistVideosPage] moveDown(${video.id})`)
-    var index = this.playlist.videosIds.findIndex((videoid) => videoid === video.id);
-    if (index !== this.playlist.videosIds.length - 1) {
-      this.playlist.videosIds.splice(index, 1)
-      this.playlist.videosIds.splice(index + 1, 0, video.id)
-      this.playlistService.updatePlaylist(this.playlist).then(() => this.searchVideos())
-    }
+    // console.log(`[PlaylistVideosPage] moveDown(${video.id})`)
+    // var index = this.playlist.videosIds.findIndex((videoid) => videoid === video.id);
+    // if (index !== this.playlist.videosIds.length - 1) {
+    //   this.playlist.videosIds.splice(index, 1)
+    //   this.playlist.videosIds.splice(index + 1, 0, video.id)
+    //   this.playlistService.updatePlaylist(this.playlist).then(() => this.searchVideos())
+    // }
   }
 
 }
