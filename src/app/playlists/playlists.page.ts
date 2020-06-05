@@ -25,10 +25,6 @@ export class PlaylistsPage implements OnInit {
     this.searchPlaylists()
   }
 
-  ionTabsDidChange(){
-    console.log("Cambio")
-  }
-
   searchPlaylists() {
     console.log('[PlaylistsPage] searchPlaylists()');
     this.playlistService.findPlaylists()
