@@ -36,9 +36,10 @@ export class PlaylistVideosPage implements OnInit {
     this.playlistVideosRequesting = []
     this.playlistService.listVideos(this.playlist.id)
       .then((videos) => {
+        console.log(videos)
         this.playlistVideosServer = videos
         let requests = videos.map((video) => {
-          if (video.type === "youtube") {
+          if (video != null && video.type === "youtube") {
             return new Promise((resolve) => {
               this.searchVideo(video.id, resolve);
             });
@@ -48,9 +49,13 @@ export class PlaylistVideosPage implements OnInit {
           console.log("all requests done")
           let _videos: Video[] = []
           videos.forEach(video => {
-            let index = this.playlistVideosRequesting.findIndex((videoRequest) => video.id === videoRequest.id);
-            if (index != -1) _videos.push(this.playlistVideosRequesting[index])
-            else _videos.push(video)
+            if (video == null) {
+
+            } else {
+              let index = this.playlistVideosRequesting.findIndex((videoRequest) => video.id === videoRequest.id);
+              if (index != -1) _videos.push(this.playlistVideosRequesting[index])
+              else _videos.push(video)
+            }
           });
           this.playlistVideos = _videos
           this.playlistVideosRequesting = []
