@@ -26,6 +26,16 @@ export class MyVideosPage implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit MyVideosPage');
+    this.videos.findVideos("").then((videos) => {
+      if(videos.length == 0){
+        this.chargeExampleDB()
+      }else{
+        this.searchVideos();
+      }
+    })
+  }
+
+  chargeExampleDB(){
     this.readVideoInfo("/assets/video/video1.mp4").then((video) => {
       video.title = "Keep spirit"
       video.description = "We will have our reward"
@@ -39,7 +49,6 @@ export class MyVideosPage implements OnInit {
         this.searchVideos();
       })
     })
-
   }
 
   searchVideos(evt?) {

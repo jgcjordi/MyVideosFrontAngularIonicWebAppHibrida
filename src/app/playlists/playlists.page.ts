@@ -25,6 +25,10 @@ export class PlaylistsPage implements OnInit {
     this.searchPlaylists()
   }
 
+  ionTabsDidChange(){
+    console.log("Cambio")
+  }
+
   searchPlaylists() {
     console.log('[PlaylistsPage] searchPlaylists()');
     this.playlistService.findPlaylists()
@@ -151,6 +155,10 @@ export class PlaylistsPage implements OnInit {
       componentProps: { playlist: playlist }
     })
       .then((modal) => {
+        modal.onDidDismiss()
+          .then((evt: OverlayEventDetail) => {
+            this.searchPlaylists()
+          });
         modal.present();
       });
   }

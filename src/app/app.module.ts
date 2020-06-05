@@ -27,6 +27,7 @@ import { PlaylistPlayerPageModule } from './playlist-player/playlist-player.modu
 
 
 import { HttpClientModule } from '@angular/common/http';
+import { RESTPlaylistServiceService } from './services/restplaylist-service.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,7 +45,7 @@ import { HttpClientModule } from '@angular/common/http';
     PlaylistPlayerPageModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: VideosService, useClass: RESTVideosServiceService },
-    { provide: PlaylistsService, useClass: ImplPlaylistService }
+    { provide: PlaylistsService, useClass: RESTPlaylistServiceService }
   ],
   bootstrap: [AppComponent]
 })

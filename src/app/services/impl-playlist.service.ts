@@ -3,7 +3,6 @@ import { Playlist } from '../models/playlist';
 import { Video } from '../models/video';
 import { PlaylistsService } from './playlists.service';
 import { YoutubeVideosService } from './youtube-videos.service';
-import { MemoryVideosService } from './memory-videos.service';
 import { VideosService } from './videos.service';
 
 
