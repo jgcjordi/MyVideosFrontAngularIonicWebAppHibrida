@@ -6,6 +6,7 @@ import { Video } from '../models/video';
 import { VideosService } from '../services/videos.service';
 import { YoutubeVideosService } from '../services/youtube-videos.service';
 import { collectExternalReferences } from '@angular/compiler';
+import { PlaylistsService } from '../services/playlists.service';
 
 
 
@@ -26,8 +27,9 @@ export class PlaylistPlayerPage implements OnInit {
   private YT: any;
   private player: any;
 
-  constructor(private modalCtrl: ModalController, private domSanitizer: DomSanitizer,
-    private youtubeVideosService: YoutubeVideosService, private videosService: VideosService) { }
+  constructor(private playlistService: PlaylistsService, private modalCtrl: ModalController,
+     private domSanitizer: DomSanitizer, private youtubeVideosService: YoutubeVideosService, 
+     private videosService: VideosService) { }
 
   ngOnInit() {
     console.log('[PlaylistPlayerPage] ngOnInit()');
@@ -47,60 +49,45 @@ export class PlaylistPlayerPage implements OnInit {
 
   searchVideos() {
     this.playlistVideosRequesting = []
-    let requests = this.playlist.videosIds.map((videoid) => {
-      return new Promise((resolve) => {
-        this.searchVideo(videoid, resolve);
-      });
-    })
-    Promise.all(requests).then(() => {
-      console.log("all requests done")
-      let _playlistVideos: Video[] = []
-      this.playlist.videosIds.forEach((videoid) => {
-        let index = this.playlistVideosRequesting.findIndex((video) => video.id === videoid);
-        if(this.playlistVideosRequesting[index].url!=="Deleted"){
-          _playlistVideos.push(this.playlistVideosRequesting[index])
-        }
-      })
-      this.playlistVideos = _playlistVideos
-      this.playlistVideosRequesting = []
-      this.video = this.playlistVideos[0]
 
-      if (this.video.type === "youtube") {
-        if (window['YT']) {
-          this.playVideoIframe(this.video.id);
-        } else {
-          window['onYouTubeIframeAPIReady'] = () => this.playVideoIframe(this.video.id);
-        }
-      }
-    })
+    this.playlistService.listVideos(this.playlist.id)
+      .then((videos) => {
+        let requests = videos.map((video) => {
+          if (video.type === "youtube") {
+            return new Promise((resolve) => {
+              this.searchVideo(video.id, resolve);
+            });
+          }
+        })
+        Promise.all(requests).then(() => {
+          console.log("all requests done")
+          let _videos: Video[] = []
+          videos.forEach(video => {
+            let index = this.playlistVideosRequesting.findIndex((videoRequest) => video.id === videoRequest.id);
+            if (index != -1) _videos.push(this.playlistVideosRequesting[index])
+            else _videos.push(video)
+          });
+          this.playlistVideos = _videos
+          this.playlistVideosRequesting = []
+          this.video = this.playlistVideos[0]
+
+          if (this.video.type === "youtube") {
+            if (window['YT']) {
+              this.playVideoIframe(this.video.id);
+            } else {
+              window['onYouTubeIframeAPIReady'] = () => this.playVideoIframe(this.video.id);
+            }
+          }
+        })
+      });
   }
 
   searchVideo(videoid: string, resolve) {
-    if (Number(videoid)) {
-      this.videosService.findVideoById(videoid).then(
-        (localVideo) => {
-          if (localVideo) {
-            this.playlistVideosRequesting.push(localVideo)
-            resolve()
-          } else {
-            let video: Video = {
-              id: videoid,
-              type: "local",
-              url: "Deleted",
-              title: "Deleted Video",
-              description: "This video was removed form the app"
-            }
-            this.playlistVideosRequesting.push(video)
-            resolve()
-          }
-        })
-    } else {
-      this.youtubeVideosService.findVideoById(videoid).then(
-        (video) => {
-          this.playlistVideosRequesting.push(video)
-          resolve()
-        })
-    }
+    this.youtubeVideosService.findVideoById(videoid).then(
+      (video) => {
+        this.playlistVideosRequesting.push(video)
+        resolve()
+      })
   }
 
   playVideoIframe(videoId: string) {
