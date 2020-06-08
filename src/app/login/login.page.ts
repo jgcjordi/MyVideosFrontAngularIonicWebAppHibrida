@@ -15,8 +15,8 @@ export class LoginPage implements OnInit {
   password: string;
   constructor(private login: LoginService, private router: Router, private alertCtrl: AlertController, private modalCtrl: ModalController) { }
   ngOnInit() {
-    const user: User = { name: 'Jordi', surname: 'Gomis', email: 'jordi', password:'gomis' };
-    this.login.addUser(user);
+    // const user: User = { name: 'Jordi', surname: 'Gomis', email: 'jordi', password:'gomis' };
+    // this.login.addUser(user);
    }
   doLogin() {
     console.log('[LoginPage] doLogin()');
