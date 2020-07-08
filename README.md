@@ -1,6 +1,6 @@
 # Web App Hibrida, con Angular, Ionic, Capacitor y Youtube Api
 
-1º: ![image](https://github.com/jgcjordi/MyVideosWebAppHibridaAngularIonic/blob/master/others-readmemd/gif1.gif) 2º: ![image](https://github.com/jgcjordi/MyVideosWebAppHibridaAngularIonic/blob/master/others-readmemd/gif2.gif)
+1º: ![image](https://github.com/jgcjordi/MyVideosFrontAngularIonicWebAppHibrida/blob/master/others-readmemd/gif1.gif) 2º: ![image](https://github.com/jgcjordi/MyVideosFrontAngularIonicWebAppHibrida/blob/master/others-readmemd/gif2.gif)
 
 ## Tecnologías Utilizadas
 
@@ -8,7 +8,7 @@
 
 * Para el desarrollo del backend se ha utilizado express con node y Mongo db como base de datos.
 
-![image](https://github.com/jgcjordi/MyVideosWebAppHibridaAngularIonic/blob/master/others-readmemd/tecnologies.png)
+![image](https://github.com/jgcjordi/MyVideosFrontAngularIonicWebAppHibrida/blob/master/others-readmemd/tecnologies.png)
 
 ### Funcionalidades
 
