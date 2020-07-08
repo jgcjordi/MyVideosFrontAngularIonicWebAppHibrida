@@ -22,4 +22,5 @@
 
 ### Backend con Expres y Mongo DB
 
-* Este proyecto se ha modificado en los siguientes repositorios para añadir un backend con Express y Mongo DB.
+* En el siguientes repositorio se añade un backend con Express y Mongo DB.
+[https://github.com/jgcjordi/MyVideosBackExpressMongo](https://github.com/jgcjordi/MyVideosBackExpressMongo)
